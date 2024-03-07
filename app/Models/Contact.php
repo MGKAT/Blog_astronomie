@@ -11,4 +11,6 @@ class Contact extends Model
 
     protected $fillable = ['name', 'email', 'subject', 'message'];
     protected $table = 'contact';
+    protected $primaryKey = 'id';
+    public $incrementing = true;
 }

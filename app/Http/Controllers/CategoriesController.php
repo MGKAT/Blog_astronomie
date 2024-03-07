@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categories;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 
-class CategorieController extends Controller
+class CategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -12,6 +14,8 @@ class CategorieController extends Controller
     public function index()
     {
         //
+        $categories = Categories::all();
+        return view('categories.index', compact('categories'));
     }
 
     /**
@@ -20,6 +24,7 @@ class CategorieController extends Controller
     public function create()
     {
         //
+        return view('categories.create');
     }
 
     /**
@@ -28,15 +33,29 @@ class CategorieController extends Controller
     public function store(Request $request)
     {
         //
+        $validated = $request->validate([
+            'name' => 'required',
+            'description' => 'required'
+        ]);
+
+        $category = Categories::create([
+            'name' => $validated['name'],
+            'description' => $validated['description']
+        ]);
+
+        return redirect()->route('categories.show', ['category' => $category->id])->with('success', 'Message sent successfully');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Categories $category): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         //
+        return view('categories.show', compact('category'));
+
     }
+
 
     /**
      * Show the form for editing the specified resource.

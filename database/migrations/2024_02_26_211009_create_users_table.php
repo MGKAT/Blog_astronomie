@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('first_name');
             $table->unsignedBigInteger('role_id');
             $table->foreign('role_id')->references('id')->on('role');
             $table->string('email')->unique();
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
+
         });
     }
 

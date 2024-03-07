@@ -13,7 +13,8 @@ class ContactController extends Controller
     public function index(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         //
-        return view('contact.index');
+        $contacts = Contact::all();
+        return view('contact.index', compact('contacts'));
     }
 
     /**
@@ -22,6 +23,7 @@ class ContactController extends Controller
     public function create()
     {
         //
+        return view('contact.create');
     }
 
     /**
@@ -37,22 +39,23 @@ class ContactController extends Controller
             'message' => 'required'
         ]);
 
-        Contact::create([
+        $contact = Contact::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'subject' => $validated['subject'],
             'message' => $validated['message']
         ]);
 
-        return redirect()->route('contact.index')->with('success', 'Message sent successfully');
+        return redirect()->route('contact.show', ['contact' => $contact->id])->with('success', 'Message sent successfully');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Contact $contact): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         //
+        return view('contact.show', compact('contact'));
     }
 
     /**

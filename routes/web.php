@@ -19,9 +19,8 @@ Route::get('/', function () {
 });
 
 Route::resource('contact', 'App\Http\Controllers\ContactController');
-Route::get('/user', [AuthController::class, 'showUsers'])->name('auth.showUsers');
-Route::delete('/user/{user}', [AuthController::class, 'deleteUser'])->name('auth.deleteUser');
-
+Route::resource('categories', 'App\Http\Controllers\CategoriesController');
+Route::resource('article', 'App\Http\Controllers\ArticleController');
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
